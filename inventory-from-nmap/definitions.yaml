@@ -1,0 +1,14 @@
+# linux|windows|macOS|esxi|embedded|freebsd:  #REQUIRED
+#   somegroupname:                            #REQUIRED
+#     pattern-match: 'pattern'
+#     vars:
+#       var_name: 'var_value'
+#       var_name: 'var_value'
+#     children:
+#     - child_group1
+#     - child_group2
+
+linux: {}
+windows: {}
+macos: {}
+mac os x: {}
