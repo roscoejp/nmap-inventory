@@ -1,0 +1,77 @@
+# Mostly used to store all of the in/out files outside the Python script
+config:
+  artifact-dir: artifacts             # all output files will go to this dir
+  ping-raw-file: ping-raw.json        # raw output from pingsweep
+  nmap-raw-file: nmap-raw.json        # raw output from nmap (all host data)
+  ssh-thumb-file: known_hosts         # known hosts file
+  inventory-file: inventory.ini       # Ansible inventory output
+
+# Blacklisted hosts - these host patterns won't be processed if found
+blacklist:
+  - example-host.mydomain.com
+  - example-regex.*
+
+# List of subnets to pingsweep for additional hosts
+pingsweep-subnets:
+  - 127.0.0.1/32
+  - 127.0.0.1/30
+
+# Host group definitions
+# A host's OS is only checked if specified in the host_group
+host-groups:
+  all-hosts:
+    children:
+      - linux
+      - windows
+
+  windows:
+    pattern-match: .*
+    vars:
+      ansible_connection : winrm
+      ansible_ssh_port : 5986
+      ansible_winrm_transport : kerberos
+      ansible_winrm_server_cert_validation : ignore
+    os: 
+      - windows-server
+      - windows
+      
+  linux:
+    pattern-match: .*
+    os:
+      - linux
+
+
+# List of OS available from various sources (AD, nMap atm)
+# A list of unique OSs (from NMap and AD) can be made using list-unique-OS.py
+os-list:
+  windows:
+    - Windows
+    - Windows 10 Enterprise
+    - Windows 10 Pro
+    - Windows 10 Pro for Workstations
+    - Windows 7 Enterprise
+    - Windows 7 Professional
+    - Windows 8.1 Enterprise
+    - Windows 8.1 Pro
+    - Windows 8.1 Pro with Media Center
+  windows-server:
+    - Windows Server 2012 R2 Datacenter
+    - Windows Server 2012 R2 Standard
+    - Windows Server 2016 Datacenter
+  linux:
+    - linux
+    - RHEL
+    - SLES
+  netapp:
+    - NetApp Release 9.0
+    - NetApp Release 9.0RC2
+    - NetApp Release 9.1
+    - NetApp Release 9.1P3
+    - NetApp Release 9.2P1
+    - NetApp Release 9.3X11
+  mac:
+    - iOS
+    - Mac OS
+    - Mac OS X
+    - macOS
+    - OS X
